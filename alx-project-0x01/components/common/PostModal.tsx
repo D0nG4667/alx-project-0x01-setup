@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 const PostModal: React.FC<PostModalProps> = ({ onClose, onSubmit }) => {
   const [post, setPost] = useState<PostData>({
-    userid: 1,
+    userId: 0,
     title: "",
     body: "",
   });

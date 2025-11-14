@@ -5,13 +5,15 @@ import Footer from "@/components/layout/Footer";
 import { PostData, PostProps } from "@/interfaces";
 import { useState } from "react";
 
-const Posts: React.FC<{ posts: PostProps[] }> = ({ posts }) => {
+const Posts: React.FC<{ postData: PostProps[] }> = ({ postData }) => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [post, setPost] = useState<PostData | null>(null);
+  const [posts, setPosts] = useState<PostData[]>(postData);
 
   const handleAddPost = (newPost: PostData) => {
-    setPost({ ...newPost, id: posts.length + 1 });
+    newPost.id = posts.length + 1;
+    setPosts((prev) => [...prev, newPost]);
   };
+
   return (
     <div className="flex flex-col h-screen">
       <Header />
@@ -27,12 +29,12 @@ const Posts: React.FC<{ posts: PostProps[] }> = ({ posts }) => {
           </button>
         </div>
         <div className="grid grid-cols-3 gap-2 ">
-          {posts?.map(({ title, body, userId, id }: PostProps, key: number) => (
+          {posts.map(({ title, body, userId, id }: PostData, key: number) => (
             <PostCard
               title={title}
               body={body}
               userId={userId}
-              id={id}
+              id={id as number}
               key={key}
             />
           ))}
@@ -53,11 +55,11 @@ const Posts: React.FC<{ posts: PostProps[] }> = ({ posts }) => {
 
 export async function getStaticProps() {
   const response = await fetch("https://jsonplaceholder.typicode.com/posts");
-  const posts: PostProps[] = await response.json();
+  const postData: PostProps[] = await response.json();
 
   return {
     props: {
-      posts,
+      postData,
     },
   };
 }
