@@ -15,7 +15,7 @@ const Users: React.FC<{ posts: UserProps[] }> = ({ posts }) => {
         </div>
 
         <div className="grid grid-cols-3 gap-2">
-          {posts?.map((post: UserProps, index: number) => (
+          {posts.map((post: UserProps, index: number) => (
             <UserCard key={index} {...post} />
           ))}
         </div>
