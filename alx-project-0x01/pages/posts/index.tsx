@@ -7,10 +7,12 @@ import { useState } from "react";
 
 const Posts: React.FC<{ postData: PostProps[] }> = ({ postData }) => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [post, setPost] = useState<PostData | null>(null); // Just for typechecker, not need
   const [posts, setPosts] = useState<PostData[]>(postData);
 
   const handleAddPost = (newPost: PostData) => {
     newPost.id = posts.length + 1;
+    setPost(newPost);
     setPosts((prev) => [...prev, newPost]);
   };
 

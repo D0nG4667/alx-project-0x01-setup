@@ -8,11 +8,11 @@ const Users: React.FC<{ users: UserProps[] }> = ({ users: initialUsers }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [users, setUsers] = useState<UserData[]>(initialUsers);
 
-  const handleAddUser = (newUser: UserData) => {
+  const handleAddUser = (user: UserData) => {
     const maxId = Math.max(...users.map((user) => user.id as number));
-    newUser.id = maxId + 1;
+    user.id = maxId + 1;
 
-    setUsers((prev) => [...prev, newUser]);
+    setUsers((prev) => [...prev, user]);
   };
 
   return (
