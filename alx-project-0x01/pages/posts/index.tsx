@@ -7,7 +7,7 @@ import { useState } from "react";
 
 const Posts: React.FC<{ posts: PostProps[] }> = ({ posts }) => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [, setPost] = useState<PostData | null>(null);
+  const [post, setPost] = useState<PostData | null>(null);
 
   const handleAddPost = (newPost: PostData) => {
     setPost({ ...newPost, id: posts.length + 1 });
@@ -16,11 +16,13 @@ const Posts: React.FC<{ posts: PostProps[] }> = ({ posts }) => {
     <div className="flex flex-col h-screen">
       <Header />
 
-      <main>
+      <main className="p-4">
         <div className="flex justify-between">
           <h1 className=" text-2xl font-semibold">Post Content</h1>
-          <button onClick={() => setModalOpen(true)}
-          className="bg-blue-700 px-4 py-2 rounded-full text-white">
+          <button
+            onClick={() => setModalOpen(true)}
+            className="bg-blue-700 px-4 py-2 rounded-full text-white"
+          >
             Add Post
           </button>
         </div>
