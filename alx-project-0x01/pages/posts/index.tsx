@@ -1,43 +1,48 @@
-import React from "react";
+import PostCard from "@/components/common/PostCard";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import PostCard from "@/components/common/PostCard";
-import Button from "@/components/common/Button";
+import { PostProps } from "@/interfaces";
 
-const samplePosts = [
-  {
-    title: "How to style with Tailwind",
-    body: "A short guide on utility-first CSS.",
-  },
-  {
-    title: "Building components",
-    body: "Break UI into small reusable pieces.",
-  },
-  { title: "Optimizing images", body: "Use next/image for best results." },
-];
-
-const PostsPage: React.FC = () => {
+const Posts: React.FC<{ posts: PostProps[] }> = ({ posts }) => {
+  console.log(posts);
   return (
-    <>
+    <div className="flex flex-col h-screen">
       <Header />
-      <main className="max-w-6xl mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-semibold">Posts</h1>
-          <Button
-            title="New Post"
-            onClick={() => alert("Open modal: Add Post")}
-          />
-        </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {samplePosts.map((p, idx) => (
-            <PostCard key={idx} title={p.title} body={p.body} />
+      <main>
+        <div className="flex justify-between">
+          <h1 className=" text-2xl font-semibold">Post Content</h1>
+          <button className="bg-blue-700 px-4 py-2 rounded-full text-white">
+            Add Post
+          </button>
+        </div>
+        <div className="grid grid-cols-3 gap-2 ">
+          {posts?.map(({ title, body, userId, id }: PostProps, key: number) => (
+            <PostCard
+              title={title}
+              body={body}
+              userId={userId}
+              id={id}
+              key={key}
+            />
           ))}
         </div>
       </main>
+
       <Footer />
-    </>
+    </div>
   );
 };
 
-export default PostsPage;
+export async function getStaticProps() {
+  const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+  const posts: PostProps[] = await response.json();
+
+  return {
+    props: {
+      posts,
+    },
+  };
+}
+
+export default Posts;

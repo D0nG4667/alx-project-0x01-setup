@@ -5,15 +5,16 @@ export interface ButtonProps {
   className?: string;
 }
 
-// Post Card Props
-export interface PostCardProps {
-  title: string;
-  body?: string;
-}
-
 // User Card Props 
 export interface UserCardProps {
   id: number;
   name: string;
   email: string;
+}
+
+export interface PostProps {
+  userId: number;
+  id: number;
+  title: string;
+  body: string;
 }
