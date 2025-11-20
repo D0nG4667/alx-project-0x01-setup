@@ -4,12 +4,12 @@ import { UserData, UserProps } from "@/interfaces";
 import UserModal from "@/components/common/UserModal";
 import { useState } from "react";
 
-const Users: React.FC<{ users: UserProps[] }> = ({ users: initialUsers }) => {
+const Users: React.FC<{ posts: UserProps[] }> = ({ posts: initialUsers }) => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [users, setUsers] = useState<UserData[]>(initialUsers);
+  const [posts, setUsers] = useState<UserData[]>(initialUsers);
 
   const handleAddUser = (user: UserData) => {
-    const maxId = Math.max(...users.map((user) => user.id as number));
+    const maxId = Math.max(...posts.map((user) => user.id as number));
     user.id = maxId + 1;
 
     setUsers((prev) => [...prev, user]);
@@ -30,7 +30,7 @@ const Users: React.FC<{ users: UserProps[] }> = ({ users: initialUsers }) => {
         </div>
 
         <div className="grid grid-cols-3 gap-2">
-          {users?.map((user: UserData, index: number) => (
+          {posts?.map((user: UserData, index: number) => (
             <UserCard key={index} {...(user as UserProps)} />
           ))}
         </div>
@@ -46,12 +46,12 @@ const Users: React.FC<{ users: UserProps[] }> = ({ users: initialUsers }) => {
 };
 
 export async function getStaticProps() {
-  const response = await fetch("https://jsonplaceholder.typicode.com/users");
-  const users = await response.json();
+  const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+  const posts = await response.json();
 
   return {
     props: {
-      users,
+      posts,
     },
   };
 }
